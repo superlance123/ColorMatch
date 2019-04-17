@@ -318,9 +318,10 @@ public class Arena extends ArenaManager implements Listener {
             }
         }
 
-        p.teleport(plugin.conf.getMainLobby().getLevel().getSafeSpawn(plugin.conf.getMainLobby()));
+
 
         resetPlayer(p);
+        p.teleport(plugin.conf.getMainLobby().getLevel().getSafeSpawn(plugin.conf.getMainLobby()));
         this.bossBar.removePlayer(p);
 
         this.bossBar.updateText(plugin.getLanguage().translateString("general.waiting_players", false, this.players.size() + "", plugin.conf.getMaxPlayers() + ""));
@@ -328,9 +329,11 @@ public class Arena extends ArenaManager implements Listener {
 
         SavedPlayer save = saves.remove(p.getName().toLowerCase());
 
-        if (save != null) {
-            save.load(p);
-        }
+               if (save != null) {
+                save.load(p);
+            }
+        } else {
+            p.setGamemode(plugin.getServer().getDefaultGamemode());
 
         if (phase == PHASE_GAME) {
             if (this.players.size() <= 2) {
