@@ -362,10 +362,14 @@ public class Arena extends ArenaManager implements Listener {
         this.bossBar.removePlayer(p);
         p.teleport(plugin.conf.getMainLobby().getLevel().getSafeSpawn(plugin.conf.getMainLobby()));
 
-        SavedPlayer save = saves.remove(p.getName().toLowerCase());
+        if (plugin.conf.saveInventory) {
+            SavedPlayer save = saves.remove(p.getName().toLowerCase());
 
-        if (save != null) {
-            save.load(p);
+            if (save != null) {
+                save.load(p);
+            }
+        } else {
+            p.setGamemode(plugin.getServer().getDefaultGamemode());
         }
     }
 
